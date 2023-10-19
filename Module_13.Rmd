@@ -1,0 +1,31 @@
+---
+title: "Module-13"
+author: "Erin Anderson"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+library(curl)
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Fall23/zombies.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+m <- lm(data = d, height ~ weight)
+SSY <- sum((m$model$height - mean(m$model$height))^2)  # height - mean(height)
+SSY
+SSR <- sum((m$fitted.values - mean(m$model$height))^2)  # predicted height - mean height
+SSR
+SSE <- sum((m$model$height - m$fitted.values)^2)  # height - predicted height
+SSE
+```
+
+```{r setup, include=TRUE}
+df_regression <- 1
+df_error <- 998
+df_y <- 999
+MSR <- SSR/df_regression
+MSE <- SSE/df_error
+MSY <- SSY/df_y
+fratio <- MSR/MSE
+fratio
+
